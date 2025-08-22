@@ -9,9 +9,14 @@ response = requests.get(url)
 
 if response.status_code == 200:
     repos = response.json()
+    repos.sort(key=lambda r: r["stargazers_count"], reverse=True)
     print(f"Total repositories: {len(repos)}")
     print("Repo names:")
     for repo in repos:
-        print("-", repo["name"])
+        name = repo["name"]
+        stars = repo["stargazers_count"] # No.of Stars
+        forks = repo["forks_count"] # No.of Forks
+        print(f"- {name} | Stars: {stars} | Forks: {forks}")
+
 else:
     print("Failed to fetch data. Check the username or your connection.")
